@@ -4,72 +4,31 @@ using Homework.HomeworkTicTacToe;
 
 class Program
 {
-    static int _currentPlayer = 1;
-    static Sticks _sticks;
     static void Main(string[] args)
     {
-        int firstPlayer;
-        _sticks = new Sticks();
-        _sticks.RegisterRemainger(Winner);
         Console.WriteLine("This game is called sticks!");
-        Console.WriteLine("The rules are simple." +
-            "There is a certain number of sticks and" +
-            " we take turns taking from 1 to 3 sticks until" +
-            " they run out.The one who took the last one loses.");
+        Console.WriteLine("The rules are simple.\n" +
+            "There is a certain number of sticks and\n" +
+            "we take turns taking from 1 to 3 sticks until\n" +
+            "they run out.The one who took the last one loses.\n");
         Console.WriteLine("Write down the number of sticks:");
-        _sticks.Start();
-
+        int totalSticks = int.Parse(Console.ReadLine());
         Console.WriteLine("Choose who will go first '1' you '2' me:");
+        Sticks.PlayerType firstPlayer = (Sticks.PlayerType)int.Parse(Console.ReadLine());
 
-        firstPlayer = int.Parse(Console.ReadLine());
-
-        if (firstPlayer == 1)
-        {
-            _currentPlayer = 1;
-        }
-        else
-        {
-            _currentPlayer = 2;
-        }
-
+        Sticks game = new Sticks(firstPlayer, totalSticks);
         do
         {
-            if (_currentPlayer == 1)
+            foreach (Sticks.PlayerType player in game.State.Players)
             {
-                Console.WriteLine("Your move:");
-                _sticks.actionHuman();
-                _sticks.RegisterRemainger(Winner);
-                Console.Clear();
+                game.MakeTurn(player);
+                if (game.State.Winner != Sticks.PlayerType.None)
+                    break;
             }
-            if (_currentPlayer == 2)
-            {
-                Console.WriteLine("My move:");
-                _sticks.actionMachine();
-                _sticks.RegisterRemainger(Winner);
-            }
-            _currentPlayer = (_currentPlayer == 1) ? 2 : 1;
         }
-        while (true);
+        while (game.State.Winner == Sticks.PlayerType.None);
     }
-    private static void Winner(int sticksLeft)
-    {
-        if (sticksLeft <= 0 && _currentPlayer == 1)
-        {
-            Console.WriteLine("Sorry, you lost!");
-            _sticks.Stop();
-        }
-        if (sticksLeft <= 0 && _currentPlayer == 2)
-        {
-            Console.WriteLine("Congratulations, you won!");
-            _sticks.Stop();
-        }
-        else
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"{sticksLeft} sticks left");
-            Console.ResetColor();
-        }
-    }
+
     static void HomeworkGameSticks()
     {
         //static int _currentPlayer = 1;
@@ -142,19 +101,19 @@ class Program
     }
     static void HomeworkGameGallows()
     {
-        var game = new Gallows();
+        Gallows game = new Gallows();
 
     }
     static void HomeworkGameTicTacToe()
     {
-        var game = new TicTacToe(_opponent: Opponent.Machin);// Игра с компьютером, игра с человеком .Human
+        TicTacToe game = new TicTacToe(_opponent: Opponent.Machin);// Игра с компьютером, игра с человеком .Human
         game.Start();
 
         Console.ReadLine();
     }
     static void HomeworkGameQuestions()
     {
-        var game = new HomeworkQuestions("Questions(in).csv");
+        HomeworkQuestions game = new HomeworkQuestions("Questions(in).csv");
 
         Console.WriteLine("Welcome to the game I Believe It or Not!\nWe will have 5 rounds and 2 attempts to guess all the statements.");
 
