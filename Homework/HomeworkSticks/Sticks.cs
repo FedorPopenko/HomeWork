@@ -33,6 +33,8 @@
 
     public void MakeTurn(PlayerType player)
     {
+        if (State.Winner != PlayerType.None)
+            return;
         switch (player)
         {
             case PlayerType.Human:
