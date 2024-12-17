@@ -1,10 +1,41 @@
-﻿using Homework.HomeworkGallows;
+﻿using Homework.HomeworkBullsAndCows;
+using Homework.HomeworkGallows;
 using Homework.HomeworkQuestions;
 using Homework.HomeworkTicTacToe;
 
 class Program
 {
     static void Main(string[] args)
+    {
+        Console.WriteLine("This game is called Bulls and Cows");
+        Console.WriteLine("Rules: \n" +
+            "each player guesses a four-digit number with different digits.\n" +
+            "The first player names a four-digit number with different digits\n" +
+            "and if there is such a digit in the hidden number, then it is a Cow,\n" +
+            "and if there is such a digit and it is in the same place, then it is a Bull.\n" +
+            "The first one to collect four bulls wins.");
+        Console.WriteLine("For example: \n" +
+            "I think  the number 2315, and you say the number 6342\n" +
+            "I must answer 1B (bull) and 1C (cow), where 1B is the number 3, and 1C is the number 2.\n" +
+            "We'll find out as the game progresses.");
+        Console.WriteLine("Choose who will go first '1' you '2' me:");
+        BullsAndCows.PlayerType firstPlayer = (BullsAndCows.PlayerType)int.Parse(Console.ReadLine());
+        Console.WriteLine("Write your number:");
+        BullsAndCows game = new BullsAndCows(firstPlayer);
+        game.InputValidation();
+        do
+        {
+            foreach (BullsAndCows.PlayerType player in game.State.Players)
+            {
+                game.MakeTurn(player);
+                if (game.State.Winner != BullsAndCows.PlayerType.None)
+                    break;
+            }
+        }
+        while (game.State.Winner == BullsAndCows.PlayerType.None);
+    }
+
+    static void HomeworkGameSticks()
     {
         Console.WriteLine("This game is called sticks!");
         Console.WriteLine("The rules are simple.\n" +
@@ -27,10 +58,7 @@ class Program
             }
         }
         while (game.State.Winner == Sticks.PlayerType.None);
-    }
 
-    static void HomeworkGameSticks()
-    {
         //static int _currentPlayer = 1;
         //static Sticks _sticks;
         //static void Main(string[] args)
@@ -96,8 +124,6 @@ class Program
         //        Console.WriteLine($"{sticksLeft} sticks left");
         //        Console.ResetColor();
         //    }
-
-
     }
     static void HomeworkGameGallows()
     {
