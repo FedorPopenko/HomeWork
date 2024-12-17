@@ -49,14 +49,8 @@ class Program
 
         Sticks game = new Sticks(firstPlayer, totalSticks);
         do
-        {
             foreach (Sticks.PlayerType player in game.State.Players)
-            {
                 game.MakeTurn(player);
-                if (game.State.Winner != Sticks.PlayerType.None)
-                    break;
-            }
-        }
         while (game.State.Winner == Sticks.PlayerType.None);
 
         //static int _currentPlayer = 1;
