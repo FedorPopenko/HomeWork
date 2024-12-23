@@ -101,9 +101,9 @@
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("Write a four digit number:");
             int[] humanAnswer = new int[4];
-            //for (int i = 0; i < 4; i++)
-            //    humanAnswer[i] = int.Parse(Console.ReadLine());
-            humanAnswer = Console.ReadLine().Split().Select(x => int.Parse(x)).ToArray();
+            string answer = Console.ReadLine();
+            for (int i = 0; i < 4; i++)
+                humanAnswer[i] = (int)char.GetNumericValue(answer[i]);
             State.HumanAnswer = humanAnswer;
             CheckingNumbers(PlayerType.Human);
             Console.ResetColor();
@@ -153,7 +153,7 @@
                     }
                 }
                 if (PlayerType.Machin == player)
-                    Console.WriteLine($"My turn:\n{answer[0]} {answer[1]} {answer[2]} {answer[3]}");
+                    Console.WriteLine($"My turn:\n{answer[0]}{answer[1]}{answer[2]}{answer[3]}");
 
                 Console.WriteLine($"{countB}Bulls,{countC}Cows");
 
@@ -166,9 +166,9 @@
             do
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                //for (int i = 0; i < 4; i++)
-                //    humanNumber[i] = int.Parse(Console.ReadLine());
-                humanNumber = Console.ReadLine().Split().Select(x => int.Parse(x)).ToArray();
+                string number = Console.ReadLine();
+                for (int i = 0; i < 4; i++)
+                    humanNumber[i] = (int)char.GetNumericValue(number[i]);
                 Console.ResetColor();
                 if (humanNumber[0] == humanNumber[1] || humanNumber[1] == humanNumber[2]
                     || humanNumber[2] == humanNumber[3] || humanNumber[0] == humanNumber[2]
