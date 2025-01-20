@@ -7,6 +7,43 @@ class Program
 {
     static void Main(string[] args)
     {
+        Console.WriteLine("Добро пожаловать на капитал шоу ПОЛЕ ЧУДЕС!");
+        Console.WriteLine("Наши дорогие телезрители прислали в нашу редакцию слово, которое вам нужно отгадать за 6 попыток.");
+        Gallows game = new Gallows();
+        string word = game.HiddenWord();
+        do
+        {
+            if (game.count == 1 && game.letter == null)
+            {
+                Console.WriteLine($"В слове {game.Word.Length} букв! ");
+            }
+            else
+                Console.WriteLine($"Cлово: {game.playerWord.ToUpper()}");
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Буквы которые вы называли:");
+            Console.ResetColor();
+
+            game.Alphabet();
+            Console.WriteLine($"Вращайте барабан! Это {game.count} попытка.");
+            Console.WriteLine("Напишите букву:");
+            game.letter = Console.ReadLine()?.ToUpper();
+            if (!string.IsNullOrEmpty(game.letter) && game.letter.Length == 1 && char.IsLetter(game.letter[0]))
+            {
+                game.calledLetters.Add(game.letter[0]);
+            }
+            Console.Clear();
+            game.CheckLetter();
+            game.count++;
+
+        }
+        while (game.count < 7 && word != game.playerWord);
+        {
+            game.CheckResult();
+        }
+    }
+    static void HomeWorkGameBullsAndCows()
+    {
         Console.WriteLine("This game is called Bulls and Cows");
         Console.WriteLine("Rules: \n" +
             "each player guesses a four-digit number with different digits.\n" +
@@ -34,7 +71,6 @@ class Program
         }
         while (game.State.Winner == BullsAndCows.PlayerType.None);
     }
-
     static void HomeworkGameSticks()
     {
         Console.WriteLine("This game is called sticks!");
@@ -121,8 +157,7 @@ class Program
     }
     static void HomeworkGameGallows()
     {
-        Gallows game = new Gallows();
-
+        //Gallows game = new Gallows();
     }
     static void HomeworkGameTicTacToe()
     {
