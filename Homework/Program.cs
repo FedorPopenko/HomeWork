@@ -7,40 +7,36 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Добро пожаловать на капитал шоу ПОЛЕ ЧУДЕС!");
-        Console.WriteLine("Наши дорогие телезрители прислали в нашу редакцию слово, которое вам нужно отгадать за 6 попыток.");
-        Gallows game = new Gallows();
-        string word = game.HiddenWord();
+        Console.WriteLine("Yes, the game is about to begin!");
+        Console.WriteLine("The rules are simple: the one who goes first puts “x”, and the second one puts “o”.");
+        Console.WriteLine("The game continues until there are no identical symbols left horizontally, vertically or diagonally.");
+        Console.WriteLine("You need to enter the number according to the board below");
+        Console.WriteLine("How many playrs will play?");
         do
         {
-            if (game.count == 1 && game.letter == null)
+            int players = int.Parse(Console.ReadLine());
+            if (players == 1)
             {
-                Console.WriteLine($"В слове {game.Word.Length} букв! ");
+                TicTacToe game = new TicTacToe(_opponent: Opponent.Machin);
+                Console.WriteLine("Choose who will go first '1' you '2' me:");
+                game.Start();
+                break;
+            }
+            else if (players == 2)
+            {
+                TicTacToe game = new TicTacToe(_opponent: Opponent.Human);
+                game.Start();
+                break;
             }
             else
-                Console.WriteLine($"Cлово: {game.playerWord.ToUpper()}");
-
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Буквы которые вы называли:");
-            Console.ResetColor();
-
-            game.Alphabet();
-            Console.WriteLine($"Вращайте барабан! Это {game.count} попытка.");
-            Console.WriteLine("Напишите букву:");
-            game.letter = Console.ReadLine()?.ToUpper();
-            if (!string.IsNullOrEmpty(game.letter) && game.letter.Length == 1 && char.IsLetter(game.letter[0]))
             {
-                game.calledLetters.Add(game.letter[0]);
+                Console.WriteLine("You need enter number 1 or 2!\n 1: if you want to play alone \n 2: if you want to play with your friend ");
             }
-            Console.Clear();
-            game.CheckLetter();
-            game.count++;
+        }
+        while (true);
 
-        }
-        while (game.count < 7 && word != game.playerWord);
-        {
-            game.CheckResult();
-        }
+        Console.ReadLine();
+
     }
     static void HomeWorkGameBullsAndCows()
     {
@@ -157,14 +153,47 @@ class Program
     }
     static void HomeworkGameGallows()
     {
-        //Gallows game = new Gallows();
+        Console.WriteLine("Добро пожаловать на капитал шоу ПОЛЕ ЧУДЕС!");
+        Console.WriteLine("Наши дорогие телезрители прислали в нашу редакцию слово, которое вам нужно отгадать за 6 попыток.");
+        Gallows game = new Gallows();
+        string word = game.HiddenWord();
+        do
+        {
+            if (game.count == 1 && game.letter == null)
+            {
+                Console.WriteLine($"В слове {game.Word.Length} букв! ");
+            }
+            else
+                Console.WriteLine($"Cлово: {game.playerWord.ToUpper()}");
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Буквы которые вы называли:");
+            Console.ResetColor();
+
+            game.Alphabet();
+            Console.WriteLine($"Вращайте барабан! Это {game.count} попытка.");
+            Console.WriteLine("Напишите букву:");
+            game.letter = Console.ReadLine()?.ToUpper();
+            if (!string.IsNullOrEmpty(game.letter) && game.letter.Length == 1 && char.IsLetter(game.letter[0]))
+            {
+                game.calledLetters.Add(game.letter[0]);
+            }
+            Console.Clear();
+            game.CheckLetter();
+            game.count++;
+
+        }
+        while (game.count < 7 && word != game.playerWord);
+        {
+            game.CheckResult();
+        }
     }
     static void HomeworkGameTicTacToe()
     {
-        TicTacToe game = new TicTacToe(_opponent: Opponent.Machin);// Игра с компьютером, игра с человеком .Human
-        game.Start();
+        //TicTacToe game = new TicTacToe(_opponent: Opponent.Machin);// Игра с компьютером, игра с человеком .Human
+        //game.Start();
 
-        Console.ReadLine();
+        //Console.ReadLine();
     }
     static void HomeworkGameQuestions()
     {
